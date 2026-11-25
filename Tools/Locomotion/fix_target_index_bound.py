@@ -1,0 +1,5 @@
+import unreal,json
+from pathlib import Path
+from editor_toolset.toolsets.blueprint import BlueprintTools as B
+assert not unreal.get_editor_subsystem(unreal.UnrealEditorSubsystem).get_game_world(),'Stop PIE before editing'
+bp=unreal.load_asset('/Game/K02/Protagonist/Blueprints/BP_K02_PlayerController');g=next(g for g in B.list_graphs(bp) if g.get_name()=='SetOrClearLockOnTarget');entry=next(n for n in B.find_nodes(g) if n.get_class().get_name()=='K2Node_FunctionEntry');branch=entry.find_then_pin().list_connected_pins()[0].get_owning_node();setter=branch.find_output_pin('then').list_connected_pins()[0].get_owning_node();clamp=setter.find_input_pin('TargetIndex').list_connected_pins()[0].get_owning_node();sub=clamp.find_input_pin('Max').list_connected_pins()[0].get_owning_node();assert sub.find_input_pin('B').set_pin_value('1');B.compile_blueprint(bp,warnings_as_errors=True);unreal.EditorAssetLibrary.save_loaded_asset(bp,only_if_is_dirty=False);code=B.read_graph_dsl(g);Path('A:/K-02 5.8/Saved/Diagnostics/LockRecovery/final-target-selection.dsl').write_text(code);unreal.log('K02_TARGET_INDEX_BOUND_FIXED')

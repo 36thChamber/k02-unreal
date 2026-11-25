@@ -1,0 +1,11 @@
+from pathlib import Path
+s=Path('A:/K-02 5.8/Tools/Integration/import_pilot.py').read_text()
+s=s.replace('Deliveries/Figurinos-UE5-v001/B_1/Exports/', 'Deliveries/Figurinos-UE5-v001/UE5_Derived_v002/B_1/')
+s=s.replace('/Game/K02/Characters/Roster/B_1/Meshes','/Game/K02/Validation/ImportProbeV3/B_1/Meshes')
+s=s.replace('/Game/K02/Characters/Roster/B_1/Rig','/Game/K02/Validation/ImportProbeV3/B_1/Rig')
+s=s.replace("'import_uniform_scale':1.0", "'import_rotation':unreal.Rotator(pitch=0,yaw=90,roll=0), 'import_uniform_scale':1.0")
+s=s.replace('pilot-import.json','normalized-v3-probe-import.json')
+exec(compile(s,__file__,'exec'),globals())
+s=Path('A:/K-02 5.8/Tools/Integration/inspect_pilot.py').read_text()
+s=s.replace('/Game/K02/Characters/Roster/B_1/','/Game/K02/Validation/ImportProbeV3/B_1/').replace('pilot-skeleton.json','normalized-v3-probe-skeleton.json')
+exec(compile(s,__file__,'exec'),globals())

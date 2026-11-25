@@ -1,0 +1,6 @@
+(fn K02FrontKickInput ()
+  (if (and (Check|GameplayTagCheck (Variables|DoNotEdit|GetPawnRef) "(TagName=\"MACS_GAS.Abilities.States.WeaponClass.Fighter\")")
+           (or (Game|Player|IsInputKeyDown self "W")
+               (or (Game|Player|WasInputKeyJustPressed self "W")
+               (> (Game|Player|GetInputAnalogKeyState self "Gamepad_LeftY") 0.5))))
+    (Abilities|TryActivateAbilityByClass (Ability|GetAbilitySystemComponent (Variables|DoNotEdit|GetPawnRef)) "/Game/K02/Protagonist/Abilities/GA_K02_Combo_4_1.GA_K02_Combo_4_1_C" true)))
